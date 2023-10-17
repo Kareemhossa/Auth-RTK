@@ -1,0 +1,41 @@
+nav {
+ min-height: 72px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 8rem;
+background-color: #282828;
+}
+
+h1 {
+  color: white;
+}
+a {
+  color: white;
+  font-size: 1.3rem;
+  text-decoration: none; 
+}
+ul {
+  display: flex;
+  list-style-type: none
+}
+li {
+  cursor: pointer;
+}
+#logo {
+  font-size: 2rem;
+}
+
+@media (max-width: 900px) {
+  /* padding: 2rem 0rem; */
+  ul {
+    padding: 2rem 0rem;
+  }
+  a{
+    font-size: 1rem;
+  }
+  #logo{
+    font-size: 1rem;
+  }
+ 
+}
