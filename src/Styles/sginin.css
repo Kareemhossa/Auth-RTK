@@ -1,9 +1,10 @@
 .container-login {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
-  padding-top: 5rem;
+  padding-top: 2rem;
+
 }
 
 form {

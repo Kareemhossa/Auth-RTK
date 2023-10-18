@@ -1,0 +1,65 @@
+.Containerdashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2rem;
+  margin: 0 auto;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  padding: 2rem;
+  /* border: 1px solid #ccc; */
+  border-radius: 5px;
+  box-shadow: 0 4px 6px 1.5px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+h2{
+  font-weight: bold;
+  padding: 2rem 0;
+}
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px 1.5px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.removeBtn {
+  background-color: #ec1c1c;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.removeBtn:hover {
+  background-color: #b50000;
+}
+
+.createBtn{
+  
+  background-color: #4f46e5;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin: 0rem auto;
+    /* width: 200px; */
+}
+.createBtn:hover { background-color: #4338ca;}
+

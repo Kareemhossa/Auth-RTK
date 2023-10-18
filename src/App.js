@@ -6,18 +6,18 @@ import { Routes, Route } from "react-router-dom";
 // Component
 import Signin from "./Componant/Signin";
 import Nav from "./Componant/Nav";
-import AdminPage from "./Componant/AdminPage";
 import UserPage from "./Componant/UserPage";
 import PageError from "./Componant/PageError";
+import Dashboard from "./Componant/Dashbord";
 
 function App() {
   return (
     <div className="App">
       <Nav />
       <Routes>
-        <Route path="/" element={<Signin />} />
+        <Route path="/" exact element={<Signin />} />
+        <Route path="/admin" element={<Dashboard />} />
         <Route path="/user" element={<UserPage />} />
-        <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<PageError />} />
       </Routes>
     </div>
