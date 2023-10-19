@@ -4,10 +4,15 @@ import "../Styles/userpage.css";
 import { Link } from "react-router-dom";
 
 const UserPage = () => {
+  const isLoginTrue = JSON.parse(localStorage.getItem("login"));
   return (
     <section className="container-user">
       <h2> welcome </h2>
-      <p>User Name : </p>
+      {isLoginTrue && isLoginTrue.userLogin ? (
+        <p>User Name : {isLoginTrue.userLogin}</p>
+      ) : (
+        ""
+      )}
       <Link to="/" className="btn-signout">
         Sign Out
       </Link>

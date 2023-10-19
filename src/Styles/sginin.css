@@ -73,7 +73,12 @@ button:hover {
   border-radius: 3px;
   margin-right: 10px;
 }
-
+.error{
+  padding-bottom: 1rem;
+  color: red;
+  font-weight: bold;
+  font-size: small;
+}
 
 
 

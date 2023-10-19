@@ -1,52 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../Styles/dashbord.module.css";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "Mahmoud",
-      email: "Mahmoud@test.com",
-      password: "12345",
-      role: "admin",
-    },
-    {
-      id: 2,
-      username: "Ali",
-      email: "Ali@test.com",
-      password: "12345",
-      role: "clint",
-    },
-  ]);
+  const API_URL = "http://localhost:3005/api";
+  const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({
-    id: "",
     username: "",
     email: "",
     password: "",
     role: "",
   });
 
-  //Hander create new user
-  const handleCreateUser = (e) => {
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`${API_URL}`);
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+      // console.error("Error fetching users: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  //handel to create anew users and post intable and updateapi
+  const handleCreateUser = async (e) => {
     e.preventDefault();
-    const updatedUser = { ...newUser, id: users.length + 1 };
-    // console.log("New User:", updatedUser);
-    setUsers([...users, updatedUser]);
-    setNewUser({
-      id: "",
-      username: "",
-      email: "",
-      password: "",
-      role: "",
-    });
+    try {
+      const response = await fetch(`${API_URL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...newUser, id: users.length + 1 }),
+      });
+      const data = await response.json();
+      setUsers([...users, data]);
+      setNewUser({
+        id: users.length + 2,
+        username: "",
+        email: "",
+        password: "",
+        role: "",
+      });
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+      // console.error("Error creating user: ", error);
+    }
   };
 
-  //handel state after remove itmes
-  const handleRemoveUser = (id) => {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    setUsers(updatedUsers);
+  //handel to remove
+  const handleRemoveUser = async (id) => {
+    try {
+      await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      });
+      const updatedUsers = users.filter((user) => user.id !== id);
+      setUsers(updatedUsers);
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+    }
   };
-
   return (
     <section className={styles.Containerdashboard}>
       <h2>Admin Dashboard</h2>
@@ -56,6 +74,7 @@ const AdminDashboard = () => {
           placeholder="Username"
           name="username"
           value={newUser.username}
+          required
           onChange={(e) => {
             setNewUser({ ...newUser, username: e.target.value });
           }}
@@ -65,6 +84,7 @@ const AdminDashboard = () => {
           placeholder="Email"
           name="email"
           value={newUser.email}
+          required
           onChange={(e) => {
             setNewUser({ ...newUser, email: e.target.value });
           }}
@@ -74,6 +94,7 @@ const AdminDashboard = () => {
           placeholder="Password"
           name="password"
           value={newUser.password}
+          required
           onChange={(e) => {
             setNewUser({ ...newUser, password: e.target.value });
           }}
@@ -83,6 +104,7 @@ const AdminDashboard = () => {
           placeholder="Role"
           name="role"
           value={newUser.role}
+          required
           onChange={(e) => {
             setNewUser({ ...newUser, role: e.target.value });
           }}
