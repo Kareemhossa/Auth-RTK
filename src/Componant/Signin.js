@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
-// import axios from "axios";
+import React, { useState } from "react";
 // Style Css
 import "../Styles/sginin.css";
 import { toast } from "react-toastify";
 // React router
 import { useNavigate } from "react-router-dom";
 // React Redux
-import { useSelector, useDispatch } from "react-redux";
-import { useLoginMutation } from "../State/userApiSlice";
-import { setCredentials } from "../State/authSlice";
+import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../State/authApiSlice";
+import { login } from "../State/authApi";
 
 const Signin = () => {
   const [name, setName] = useState("");
@@ -18,66 +17,34 @@ const Signin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login] = useLoginMutation();
-  const { userInfo } = useSelector((state) => state.auth);
+  const [loginUser] = useLoginMutation();
 
-  useEffect(() => {
-    if (userInfo == null) {
-      navigate("/");
-    }
-  }, [userInfo, navigate]);
-
-  //handelSignin with username +password
-  // const handleSignIn = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post("http://localhost:5000/auth", {
-  //       username: name,
-  //       password: password,
-  //     });
-  //     localStorage.setItem(
-  //       "login",
-  //       JSON.stringify({
-  //         userLogin: true,
-  //         token: response.data.access_token,
-  //       })
-  //     );
-  //     console.log("response", response);
-  //     console.log(response.access_token);
-  //     setError("");
-  //     setName("");
-  //     setPassword("");
-  //     if (loggedInAsAdmin) {
-  //       navigate("/admin");
-  //     } else {
-  //       navigate("/user");
-  //     }
-  //   } catch (error) {
-  //     if (error.code === "username") {
-  //       setError("Name is not defind.");
-  //     } else {
-  //       setError("Error signing in. Please check your credentials.");
-  //     }
-  //   }
-  // };
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const userData = await login({ name, password }).unwrap();
-      dispatch(setCredentials({ ...userData }));
+      const result = await loginUser({ name, password });
+      dispatch(login({ user: result.data, token: result.data }));
       setName("");
       setPassword("");
-      console.log(userData);
+      console.log(result);
       if (loggedInAsAdmin) {
         navigate("/admin");
       } else {
         navigate("/user");
       }
-    } catch (errer) {
-      toast.error(errer?.data?.message || errer.error);
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+      // if (!error.response) {
+      //   toast.error("No Server Response");
+      // } else if (error.response?.status === 400) {
+      //   toast.error("Missing Username or Password");
+      // } else if (error.response?.status === 401) {
+      //   toast.error("Unauthorized");
+      // } else {
+      //   toast.error("Login Failed");
+      // }
     }
   };
-
   return (
     <section className="container-login">
       <h2>Sign In </h2>

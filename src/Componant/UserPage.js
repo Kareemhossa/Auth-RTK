@@ -1,18 +1,18 @@
 import React from "react";
+// Style Css
 import "../Styles/userpage.css";
-//router
+// Router Dom
 import { Link } from "react-router-dom";
+// React Redux
+import { useSelector } from "react-redux";
 
 const UserPage = () => {
-  const isLoginTrue = JSON.parse(localStorage.getItem("login"));
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <section className="container-user">
-      <h2> welcome </h2>
-      {isLoginTrue && isLoginTrue.userLogin ? (
-        <p>User Name : {isLoginTrue.userLogin}</p>
-      ) : (
-        ""
-      )}
+      <h2>Welcome </h2>
+      {user ? <p>User Name: {user.name}</p> : ""}
       <Link to="/" className="btn-signout">
         Sign Out
       </Link>

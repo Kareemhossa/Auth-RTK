@@ -5,14 +5,15 @@ import "../Styles/nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { useLogoutMutation } from "../State/userApiSlice";
-import { logout } from "../State/authSlice";
+import { useLogoutMutation } from "../State/authApiSlice";
+import { logout } from "../State/authApi";
 
 const Nav = () => {
-  const { userinfo } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
   const [logoutData] = useLogoutMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const LogoutHandle = async () => {
     try {
       await logoutData();
@@ -24,9 +25,9 @@ const Nav = () => {
   };
   return (
     <nav className="nav">
-      <h1>Bright Vision</h1>
+      <h1>Hello Dude</h1>
       <ul>
-        {userinfo ? (
+        {user ? (
           <li>
             <Link onClick={LogoutHandle} to="/">
               Logout
